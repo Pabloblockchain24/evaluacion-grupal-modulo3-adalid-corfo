@@ -546,35 +546,13 @@ function manejarCola() {
 ## Explicación de las funciones y clases creadas, y el manejo de eventos.
 
 ### Listener para el envío del formulario de contacto
- Esta función captura el evento de envío de un formulario de contacto y muestra un mensaje de confirmación cuando el formulario es enviado correctamente.
 
- formulario.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const datosFormulario = {
-    nombre: document.getElementById("nombre").value,
-    email: document.getElementById("email").value,
-    asunto: document.getElementById("asunto").value,
-    mensaje: document.getElementById("mensaje").value,
-  };
-  console.log('Los datos ingresados son:', datosFormulario)
-  alert("Gracias por contactarnos. Tu mensaje ha sido enviado.");
-  formulario.reset();
-})
+ Esta función captura el evento de envío de un formulario de contacto y muestra un mensaje de confirmación cuando el formulario es enviado correctamente.
 
 ### Simulación de llegada de un nuevo paciente
 
 Dispara un evento personalizado que simula la llegada de un nuevo paciente y muestra una notificación en la página.
 
-const nuevoPacienteEvent = new CustomEvent("nuevoPaciente", {
-  detail: {
-    nombre: "Diego Pérez",
-    id_pac: "pac_09",
-  },
-});
-
-setTimeout(() => {
-  document.dispatchEvent(nuevoPacienteEvent);
-}, 5000);
 
 ### Clase Doctor y subclase Cirujano
 
@@ -582,48 +560,3 @@ Se define una clase Doctor con propiedades como nombre, especialidad, años de e
 
 **Subclase Cirujano**: Esta subclase extiende la clase Doctor y sobrescribe el método obtenerInformacion para mostrar información específica sobre las cirugías realizadas por el cirujano.
 
-class Doctor{
-  constructor(id_doc, nombre, especialidad, descripcion, imagen, anios_experiencia, disponibilidad){
-    this.id_doc = id_doc;
-    this.nombre = nombre;
-    this.especialidad = especialidad;
-    this.descripcion = descripcion;
-    this.imagen = imagen;
-    this._anios_experiencia = anios_experiencia;
-    this.disponibilidad = disponibilidad;
-    this.informacion_adicional = [];
-    this.citas_agendadas = [];
-  }
-
-  obtenerInformacion(){
-    return `El doctor ${this.nombre} tiene ${this.anios_experiencia} años de experiencia en la especialidad de ${this.especialidad}`
-  }
-
-  calcularCostosConsulta(){
-    totalConsulta = this.citas_agendadas.reduce((total, cita) => total + cita.valor_consulta, 0);
-    return `La consulta tiene un costo total de $${totalConsulta}.`;
-  }
-
-  gestionarDisponibilidad(nuevaDisponibilidad){
-    this.disponibilidad = nuevaDisponibilidad;
-  }
-
-  get aniosExperiencia() {
-    return this.anios_experiencia;
-  }
-
-  set aniosExperiencia(nuevosAnios) {
-    this.anios_experiencia = nuevosAnios; 
-  }
-}
-
-class Cirujano extends Doctor{
-  constructor(nombre, especialidad, anios_experiencia){
-    super(nombre, especialidad, anios_experiencia);
-    this.cirujias = ['cir_01', 'cir_02', 'cir_03'];
-  }
-
-  obtenerInformacion(){
-    return `El cirujano ${this.nombre} ha hecho las siguientes cirujias: ${this.cirujias}`
-  }
-}
